@@ -1,0 +1,14 @@
+# Psudocode and outline
+
+=============
+== Outline ==
+=============
+
+Goals: Manage (or grow) a successful drone business. Due to the hype of drones this year, your goal is to develop and market the next best selling drone in time for christmas.
+
+Tabs:
+
+1) Overview
+2) Products
+3) Marketing
+4) Shop

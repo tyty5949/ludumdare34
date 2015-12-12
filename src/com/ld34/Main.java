@@ -97,6 +97,8 @@ public class Main implements Runnable {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glClearColor(0f, 0f, 0f, 1.0f);
 
+        Textures.init();
+        Fonts.init();
         currentGameState = new Game();
 
         long now = System.nanoTime();
@@ -108,9 +110,6 @@ public class Main implements Runnable {
         long lastUpdate = now;
         double renderDelta = 0.0;
         double updateDelta = 0.0;
-
-        Textures.init();
-        Fonts.init();
 
         running = true;
 
@@ -131,7 +130,7 @@ public class Main implements Runnable {
             }
 
             if (deltaU >= 1.0) {
-                render(updateDelta);
+                update(updateDelta);
                 updateDelta = (now - lastUpdate) / 1000000000.0f;
                 lastUpdate = now;
                 deltaU--;
@@ -160,8 +159,8 @@ public class Main implements Runnable {
                 fps = 1.0 / delta;
             }
             fpsCount++;
-            Fonts.uiFont.drawText("FPS: " + decimalFormat.format(fps), 0, 0, Colors.DEBUG_FONT_COLOR);
-            Fonts.uiFont.drawText("GameState: " + currentGameState.name, 0, 24, Colors.DEBUG_FONT_COLOR);
+            Fonts.debug.drawText("FPS: " + decimalFormat.format(fps), 0, 576, Colors.DEBUG_FONT_COLOR);
+            Fonts.debug.drawText("GameState: " + currentGameState.name, 0, 600, Colors.DEBUG_FONT_COLOR);
         }
 
         glfwSwapBuffers(window);

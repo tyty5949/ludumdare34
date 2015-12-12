@@ -11,11 +11,13 @@ import java.io.IOException;
  */
 public class Fonts {
 
-    public static TrueTypeFont uiFont;
+    public static TrueTypeFont debug;
+    public static TrueTypeFont topBar;
 
     public static void init() {
         try {
-            uiFont = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel.ttf")).deriveFont(Font.PLAIN, 24));
+            debug = new TrueTypeFont(new Font("Impact", Font.PLAIN, 24));
+            topBar = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_square.ttf")).deriveFont(Font.PLAIN, 34));
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

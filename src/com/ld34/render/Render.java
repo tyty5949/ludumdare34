@@ -1,6 +1,7 @@
 package com.ld34.render;
 
 import com.ld34.util.graphics.Glyph;
+import com.ld34.util.graphics.SpriteSheetObject;
 import com.ld34.util.graphics.Texture;
 
 import java.awt.*;
@@ -33,5 +34,41 @@ public class Render {
         glEnd();
         if (alpha)
             glDisable(GL_BLEND);
+    }
+
+    public static void drawFilledRect(float x, float y, float w, float h, Color c) {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f((float) c.getRed() / 255f, (float) c.getGreen() / 255f, (float) c.getBlue() / 255f, (float) c.getAlpha() / 255f);
+
+        glBegin(GL_QUADS);
+        glVertex2f(x, y);
+        glVertex2f(x + w, y);
+        glVertex2f(x + w, y + h);
+        glVertex2f(x, y + h);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+    }
+
+    public static void drawSpriteSheetObject(SpriteSheetObject s, float x, float y, float w, float h, Texture t) {
+        glPushMatrix();
+        glColor4f(1f, 1f, 1f, 1f);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        t.bind();
+        glBegin(GL_QUADS);
+        glTexCoord2f(s.getX() / t.getWidth(), s.getY() / t.getHeight());
+        glVertex2f(x, y);
+        glTexCoord2f((s.getX() + s.getWidth()) / t.getWidth(), s.getY() / t.getHeight());
+        glVertex2f(x + w, y);
+        glTexCoord2f((s.getX() + s.getWidth()) / t.getWidth(), (s.getY() + s.getHeight()) / t.getHeight());
+        glVertex2f(x + w, y + h);
+        glTexCoord2f(s.getX() / t.getWidth(), (s.getY() + s.getHeight()) / t.getHeight());
+        glVertex2f(x, y + h);
+        glEnd();
+
+        glDisable(GL_BLEND);
+        glPopMatrix();
     }
 }
