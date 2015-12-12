@@ -14,10 +14,18 @@ public class Textures {
 
     public static SpriteSheetObject pauseButton;
     public static SpriteSheetObject playButton;
+    public static SpriteSheetObject tabBackground;
+    public static SpriteSheetObject[] tabHeaders;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
         pauseButton = new SpriteSheetObject(0, 0, 9, 9);
         playButton = new SpriteSheetObject(9, 0, 6, 9);
+        tabBackground = new SpriteSheetObject(0, 72, 223, 184);
+        tabHeaders = new SpriteSheetObject[4];
+        tabHeaders[0] = new SpriteSheetObject(0, 54, 56, 18);
+        tabHeaders[1] = new SpriteSheetObject(56, 54, 55, 18);
+        tabHeaders[2] = new SpriteSheetObject(111, 54, 56, 18);
+        tabHeaders[3] = new SpriteSheetObject(167, 54, 56, 18);
     }
 }

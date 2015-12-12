@@ -95,7 +95,7 @@ public class Main implements Runnable {
         GL11.glOrtho(0, WIDTH, HEIGHT, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glClearColor(0f, 0f, 0f, 1.0f);
+        GL11.glClearColor(.1f, .1f, .1f, 1.0f);
 
         Textures.init();
         Fonts.init();
@@ -141,7 +141,8 @@ public class Main implements Runnable {
 
     private double fps;
     private int fpsCount = 0;
-    private DecimalFormat decimalFormat = new DecimalFormat("#.00");
+    private DecimalFormat decimalFormat = new DecimalFormat("#.000");
+
     private void render(double delta) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glfwPollEvents();
@@ -154,7 +155,7 @@ public class Main implements Runnable {
         }
 
         if (DEBUG) {
-            if(fpsCount > 20) {
+            if (fpsCount > 20) {
                 fpsCount = 0;
                 fps = 1.0 / delta;
             }

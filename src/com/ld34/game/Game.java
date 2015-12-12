@@ -35,7 +35,7 @@ public class Game extends GameState {
     private int month;
     private int day;
 
-    private double marketShare = 100;
+    private double marketShare = 32.1;
     private long money;
     private String moneyString;
     private TabComponent[] tabs;
@@ -45,13 +45,13 @@ public class Game extends GameState {
         tabs = new TabComponent[4];
         tabs[0] = new OverviewTab();
         tabs[1] = new ProductsTab();
-        tabs[2] = new MarketingTab();
+        tabs[2] = new ResearchTab();
         tabs[3] = new ShopTab();
 
         paused = true;
         pauseButton = new Button(0, 0, 48, 64);
         mouseCooldown = false;
-        money = 784785444;
+        money = 7784785444L;
         simulateDay();
 
         name = "Game";
@@ -63,7 +63,30 @@ public class Game extends GameState {
         if (Mouse.isButtonDown(0) && !mouseCooldown) {
             if (pauseButton.contains(Mouse.getX(), Mouse.getY()))
                 paused = !paused;
+
+            if (tabs[0].headerButton.contains(Mouse.getX(), Mouse.getY())) {
+                tabs[0].active = true;
+                tabs[1].active = false;
+                tabs[2].active = false;
+                tabs[3].active = false;
+            } else if (tabs[1].headerButton.contains(Mouse.getX(), Mouse.getY())) {
+                tabs[0].active = false;
+                tabs[1].active = true;
+                tabs[2].active = false;
+                tabs[3].active = false;
+            } else if (tabs[2].headerButton.contains(Mouse.getX(), Mouse.getY())) {
+                tabs[0].active = false;
+                tabs[1].active = false;
+                tabs[2].active = true;
+                tabs[3].active = false;
+            } else if (tabs[3].headerButton.contains(Mouse.getX(), Mouse.getY())) {
+                tabs[0].active = false;
+                tabs[1].active = false;
+                tabs[2].active = false;
+                tabs[3].active = true;
+            }
         }
+        for (TabComponent tab : tabs) tab.update();
 
         if (!paused) {
             dayTimer += delta;
@@ -87,15 +110,28 @@ public class Game extends GameState {
     public void render(double delta, Main main) {
         // Top Bar
         Render.drawFilledRect(0f, 0f, 640f, 64f, Colors.UI_COLOR_DARK);
-        Fonts.topBar.drawText(moneyString, 650 - ((float) Fonts.topBar.getWidth(moneyString)), 4, Colors.FONT_DARK);
-        Fonts.topBar.drawText("MS: " + marketShare + "%", 320f - ((float) Fonts.topBar.getWidth("MS: " + marketShare + "%") / 2.0f), 4f, Colors.FONT_DARK);
-        Fonts.topBar.drawText(MONTHS[month] + ", " + day, 48, 4, Colors.FONT_DARK);
+        Fonts.topBar.drawText(moneyString, 650 - ((float) Fonts.topBar.getWidth(moneyString)), 4, Colors.FONT_LIGHT);
+        Fonts.topBar.drawText("MS: " + marketShare + "%", 320f - ((float) Fonts.topBar.getWidth("MS: " + marketShare + "%") / 2.0f), 4f, Colors.FONT_LIGHT);
+        Fonts.topBar.drawText(MONTHS[month] + ", " + day, 48, 4, Colors.FONT_LIGHT);
         if (paused)
             Render.drawSpriteSheetObject(Textures.pauseButton, 8, 17, 32, 32, Textures.spriteSheet);
         else
             Render.drawSpriteSheetObject(Textures.playButton, 8, 17, 32, 32, Textures.spriteSheet);
 
         // Tabs
+        for (int i = 0; i < 4; i++) {
+            Render.drawSpriteSheetObject(Textures.tabHeaders[i], 2f + (i * 159), 77.76f, 159, 51.36f, Textures.spriteSheet);
+            Fonts.tabHeaderSmall.drawText(tabs[i].name, 81.5f + (i * 159) - ((float) Fonts.tabHeaderSmall.getWidth(tabs[i].name) / 2f), 77.76f, Colors.FONT_LIGHT);
+        }
+        Render.drawSpriteSheetObject(Textures.tabBackground, 2, 112, 636, 526, Textures.spriteSheet);
+        if (tabs[0].active)
+            tabs[0].render();
+        else if (tabs[1].active)
+            tabs[1].render();
+        else if (tabs[2].active)
+            tabs[2].render();
+        else if (tabs[3].active)
+            tabs[3].render();
 
         // Helps
     }
