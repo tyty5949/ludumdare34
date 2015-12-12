@@ -37,8 +37,8 @@ public class ShopTab extends TabComponent {
         buttons[5] = new Button(432, 378, 186, 186);
         activeButton = 0;
         activeButtonState = 0;
-        prices = new long[6];
-        priceStrings = new String[6];
+        prices = new long[4];
+        priceStrings = new String[4];
         for (int i = 0; i < prices.length; i++) {
             prices[i] = Game.STARTING_PRICES[i];
             priceStrings[i] = Utilities.formatMoney(prices[i], Utilities.ADD_COMMAS);
@@ -48,7 +48,7 @@ public class ShopTab extends TabComponent {
     @Override
     public void update(Game game) {
         activeButton = -1;
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 4; i++) {
             if (buttons[i].contains(Mouse.getX(), Mouse.getY())) {
                 activeButton = i;
                 if (Mouse.isButtonDown(0))
@@ -96,7 +96,7 @@ public class ShopTab extends TabComponent {
         Render.drawSpriteSheetObject(Textures.tabHeaders[3], 479f, 69.2f, 159, 51.36f, Textures.spriteSheet);
         Fonts.tabHeaderLarge.drawText(name, 556.5f - ((float) Fonts.tabHeaderLarge.getWidth(name) / 2f), 72f, Colors.FONT_LIGHT);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 4; i++) {
             if (i == activeButton)
                 Render.drawSpriteSheetObject(Textures.baseShopButtons[activeButtonState + 1], 20 + (206 * (i % 3)), 152 + (226 * (i / 3)), 186, 186, Textures.spriteSheet);
             else

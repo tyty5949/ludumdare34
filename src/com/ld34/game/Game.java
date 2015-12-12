@@ -29,7 +29,7 @@ public class Game extends GameState {
     };
 
     public static final int[] STARTING_PRICES = {
-            1200, 1200, 1900, 100000, 0, 0
+            1200, 1200, 1900, 100000
     };
 
     private boolean paused;
