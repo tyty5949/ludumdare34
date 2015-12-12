@@ -9,9 +9,7 @@ import com.ld34.render.Render;
 import com.ld34.util.Button;
 import com.ld34.util.GameState;
 import com.ld34.util.Mouse;
-
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
+import com.ld34.util.Utilities;
 
 /**
  * Created on 12/11/2015.
@@ -26,19 +24,34 @@ public class Game extends GameState {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
 
+    public static final String[] FACTORY_LEVELS = {
+            "Parents Basement", "Your Own Garage", "Small Factory", "Large Factory", "Mega Factory", "Chinese Outsource"
+    };
+
+    public static final int[] STARTING_PRICES = {
+            1200, 1200, 1900, 100000, 0, 0
+    };
+
     private boolean paused;
     private Button pauseButton;
     private boolean mouseCooldown;
 
     private int dayCounter;
-    private double dayTimer = 2;
+    private double dayTimer;
     private int month;
     private int day;
 
-    private double marketShare = 32.1;
+    private double marketShare = 0.0;
+
     private long money;
+
     private String moneyString;
     private TabComponent[] tabs;
+
+    private int advertisingStaff;
+    private int researchStaff;
+    private int bookCookers;
+    private int factoryLevel;
 
     @Override
     public void init(Main main) {
@@ -51,8 +64,11 @@ public class Game extends GameState {
         paused = true;
         pauseButton = new Button(0, 0, 48, 64);
         mouseCooldown = false;
-        money = 7784785444L;
-        simulateDay();
+        dayTimer = 0;
+        dayCounter = 1;
+        day = 1;
+        money = 999845317;
+        moneyString = Utilities.formatMoney(money, Utilities.ADD_COMMAS);
 
         name = "Game";
         initialized = true;
@@ -86,7 +102,7 @@ public class Game extends GameState {
                 tabs[3].active = true;
             }
         }
-        for (TabComponent tab : tabs) tab.update();
+        for (TabComponent tab : tabs) if (tab.active) tab.update(this);
 
         if (!paused) {
             dayTimer += delta;
@@ -110,7 +126,7 @@ public class Game extends GameState {
     public void render(double delta, Main main) {
         // Top Bar
         Render.drawFilledRect(0f, 0f, 640f, 64f, Colors.UI_COLOR_DARK);
-        Fonts.topBar.drawText(moneyString, 650 - ((float) Fonts.topBar.getWidth(moneyString)), 4, Colors.FONT_LIGHT);
+        Fonts.topBar.drawText(moneyString, 636 - ((float) Fonts.topBar.getWidth(moneyString)), 4, Colors.FONT_LIGHT);
         Fonts.topBar.drawText("MS: " + marketShare + "%", 320f - ((float) Fonts.topBar.getWidth("MS: " + marketShare + "%") / 2.0f), 4f, Colors.FONT_LIGHT);
         Fonts.topBar.drawText(MONTHS[month] + ", " + day, 48, 4, Colors.FONT_LIGHT);
         if (paused)
@@ -125,33 +141,77 @@ public class Game extends GameState {
         }
         Render.drawSpriteSheetObject(Textures.tabBackground, 2, 112, 636, 526, Textures.spriteSheet);
         if (tabs[0].active)
-            tabs[0].render();
+            tabs[0].render(this);
         else if (tabs[1].active)
-            tabs[1].render();
+            tabs[1].render(this);
         else if (tabs[2].active)
-            tabs[2].render();
+            tabs[2].render(this);
         else if (tabs[3].active)
-            tabs[3].render();
+            tabs[3].render(this);
 
         // Helps
     }
 
     private void simulateDay() {
-
+        money += 100000;
 
         // Compute money string
-        String suf = "";
-        double tempMoney = (double) money;
-        if (money > 999999999) {
-            suf = "bil";
-            tempMoney /= 1000000000;
-        } else if (money > 999999) {
-            suf = "mil";
-            tempMoney /= 1000000;
-        }
-        if (money > 999999)
-            moneyString = "$" + new DecimalFormat("#,##0.0").format(new BigDecimal(tempMoney)) + " " + suf;
-        else
-            moneyString = "$" + new DecimalFormat("#,##0").format(new BigDecimal(tempMoney)) + " " + suf;
+        moneyString = Utilities.formatMoney(money, Utilities.ADD_COMMAS);
     }
+
+    public void computePerks() {
+
+    }
+
+    public int getAdvertisingStaff() {
+        return advertisingStaff;
+    }
+
+    public void setAdvertisingStaff(int advertisingStaff) {
+        this.advertisingStaff = advertisingStaff;
+        computePerks();
+    }
+
+    public int getResearchStaff() {
+        return researchStaff;
+    }
+
+    public void setResearchStaff(int researchStaff) {
+        this.researchStaff = researchStaff;
+        computePerks();
+    }
+
+    public int getBookCookers() {
+        return bookCookers;
+    }
+
+    public void setBookCookers(int bookCookers) {
+        this.bookCookers = bookCookers;
+        computePerks();
+    }
+
+    public int getFactoryLevel() {
+        return factoryLevel;
+    }
+
+    public void setFactoryLevel(int factoryLevel) {
+        this.factoryLevel = factoryLevel;
+    }
+
+    public long getMoney() {
+        return money;
+    }
+
+    public void setMoney(long money) {
+        this.money = money;
+    }
+
+    public String getMoneyString() {
+        return moneyString;
+    }
+
+    public void setMoneyString(String moneyString) {
+        this.moneyString = moneyString;
+    }
+
 }

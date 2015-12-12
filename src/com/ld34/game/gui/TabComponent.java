@@ -1,5 +1,6 @@
 package com.ld34.game.gui;
 
+import com.ld34.game.Game;
 import com.ld34.util.Button;
 
 /**
@@ -11,7 +12,7 @@ public abstract class TabComponent {
     public Button headerButton;
     public String name;
 
-    public abstract void update();
+    public abstract void update(Game game);
 
-    public abstract void render();
+    public abstract void render(Game game);
 }

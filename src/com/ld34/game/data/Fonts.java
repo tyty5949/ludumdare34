@@ -15,6 +15,7 @@ public class Fonts {
     public static TrueTypeFont topBar;
     public static TrueTypeFont tabHeaderSmall;
     public static TrueTypeFont tabHeaderLarge;
+    public static TrueTypeFont shopButtonLabel;
 
     public static void init() {
         try {
@@ -22,6 +23,7 @@ public class Fonts {
             topBar = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_square.ttf")).deriveFont(Font.PLAIN, 34));
             tabHeaderSmall = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_square.ttf")).deriveFont(Font.PLAIN, 22));
             tabHeaderLarge = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_high_square.ttf")).deriveFont(Font.PLAIN, 46));
+            shopButtonLabel = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_mini_square.ttf")).deriveFont(Font.PLAIN, 18));
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

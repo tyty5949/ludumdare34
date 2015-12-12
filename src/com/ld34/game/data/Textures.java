@@ -16,6 +16,8 @@ public class Textures {
     public static SpriteSheetObject playButton;
     public static SpriteSheetObject tabBackground;
     public static SpriteSheetObject[] tabHeaders;
+    public static SpriteSheetObject[] baseShopButtons;
+    public static SpriteSheetObject[] shopButtons;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
@@ -27,5 +29,17 @@ public class Textures {
         tabHeaders[1] = new SpriteSheetObject(56, 54, 55, 18);
         tabHeaders[2] = new SpriteSheetObject(111, 54, 56, 18);
         tabHeaders[3] = new SpriteSheetObject(167, 54, 56, 18);
+        baseShopButtons = new SpriteSheetObject[3];
+        baseShopButtons[0] = new SpriteSheetObject(0, 256, 64, 64);
+        baseShopButtons[1] = new SpriteSheetObject(64, 256, 64, 64);
+        baseShopButtons[2] = new SpriteSheetObject(128, 256, 64, 64);
+        shopButtons = new SpriteSheetObject[6];
+        shopButtons[0] = new SpriteSheetObject(15, 0, 44, 33);
+        shopButtons[1] = new SpriteSheetObject(15, 0, 44, 33);
+        shopButtons[2] = new SpriteSheetObject(15, 0, 44, 33);
+        shopButtons[3] = new SpriteSheetObject(15, 0, 44, 33);
+        shopButtons[4] = new SpriteSheetObject(15, 0, 44, 33);
+        shopButtons[5] = new SpriteSheetObject(15, 0, 44, 33);
+
     }
 }
