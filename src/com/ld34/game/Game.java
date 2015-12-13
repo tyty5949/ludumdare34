@@ -11,6 +11,8 @@ import com.ld34.util.GameState;
 import com.ld34.util.Mouse;
 import com.ld34.util.Utilities;
 
+import java.util.ArrayList;
+
 /**
  * Created on 12/11/2015.
  */
@@ -43,7 +45,13 @@ public class Game extends GameState {
 
     private double marketShare = 0.0;
 
+    private ArrayList<Double> lastDailyMarketShares;
+
     private long money;
+    private long profit = 1;
+    private ArrayList<Long> lastDailyProfits;
+    private long expenditure = 0;
+    private long income = 0;
 
     private String moneyString;
     private TabComponent[] tabs;
@@ -67,8 +75,13 @@ public class Game extends GameState {
         dayTimer = 0;
         dayCounter = 1;
         day = 1;
-        money = 999845317;
+        money = 0;
         moneyString = Utilities.formatMoney(money, Utilities.ADD_COMMAS);
+
+        lastDailyProfits = new ArrayList<>();
+        lastDailyProfits.add(1L);
+        lastDailyMarketShares = new ArrayList<>();
+        lastDailyMarketShares.add(-1.0);
 
         name = "Game";
         initialized = true;
@@ -153,7 +166,12 @@ public class Game extends GameState {
     }
 
     private void simulateDay() {
-        money += 100000;
+        profit = income - expenditure;
+        money += profit;
+
+        // Update graphs
+        lastDailyMarketShares.add(marketShare);
+        lastDailyProfits.add(profit);
 
         // Compute money string
         moneyString = Utilities.formatMoney(money, Utilities.ADD_COMMAS);
@@ -214,4 +232,19 @@ public class Game extends GameState {
         this.moneyString = moneyString;
     }
 
+    public ArrayList<Double> getLastDailyMarketShares() {
+        return lastDailyMarketShares;
+    }
+
+    public void setLastDailyMarketShares(ArrayList<Double> lastDailyMarketShares) {
+        this.lastDailyMarketShares = lastDailyMarketShares;
+    }
+
+    public ArrayList<Long> getLastDailyProfits() {
+        return lastDailyProfits;
+    }
+
+    public void setLastDailyProfits(ArrayList<Long> lastDailyProfits) {
+        this.lastDailyProfits = lastDailyProfits;
+    }
 }

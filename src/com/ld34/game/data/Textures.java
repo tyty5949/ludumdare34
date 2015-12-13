@@ -18,6 +18,7 @@ public class Textures {
     public static SpriteSheetObject[] tabHeaders;
     public static SpriteSheetObject[] baseShopButtons;
     public static SpriteSheetObject[] shopButtons;
+    public static SpriteSheetObject graph;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
@@ -40,6 +41,6 @@ public class Textures {
         shopButtons[3] = new SpriteSheetObject(15, 0, 44, 33);
         shopButtons[4] = new SpriteSheetObject(15, 0, 44, 33);
         shopButtons[5] = new SpriteSheetObject(15, 0, 44, 33);
-
+        graph = new SpriteSheetObject(224, 0, 69, 69);
     }
 }

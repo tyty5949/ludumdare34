@@ -71,4 +71,22 @@ public class Render {
         glDisable(GL_BLEND);
         glPopMatrix();
     }
+
+    public static void drawPixelLine(float startX, float startY, float endX, float endY, Color c) {
+        glDisable(GL_TEXTURE_2D);
+        glColor4f((float) c.getRed() / 255f, (float) c.getGreen() / 255f, (float) c.getBlue() / 255f, (float) c.getAlpha() / 255f);
+
+        glBegin(GL_LINES);
+        glVertex2f(startX, startY - 3);
+        glVertex2f(endX, endY - 3);
+        glVertex2f(startX, startY - 2);
+        glVertex2f(endX, endY - 2);
+        glVertex2f(startX, startY - 1);
+        glVertex2f(endX, endY - 1);
+        glVertex2f(startX, startY);
+        glVertex2f(endX, endY);
+        glEnd();
+
+        glEnable(GL_TEXTURE_2D);
+    }
 }
