@@ -168,6 +168,10 @@ public class Keyboard extends GLFWKeyCallback {
         switch (keyCode) {
             case KEY_SPACE:
                 return ' ';
+            case KEY_PERIOD:
+                return '.';
+            case KEY_COMMA:
+                return ',';
             case KEY_0:
                 return '0';
             case KEY_1:

@@ -30,6 +30,13 @@ public class Game extends GameState {
             "Parents Basement", "Your Own Garage", "Small Factory", "Large Factory", "Mega Factory", "Chinese Outsource"
     };
 
+    public static final String[][] PERKS = {
+            {"Max Speed of 5 mph", "", "Max Speed of 10 mph", "", "Max Speed of 40 mph", "", "", "Max Speed of 75 mph", "", "Max Speed of 100 mph"},
+            {"", "", "Can do Flips", "", "Can do Loops", "", "", "", "", "Autonomous Flight"},
+            {"", "", "", "", "Robust Motors", "", "", "", "All Carbon Fiber", ""},
+            {}
+    };
+
     public static final int[] STARTING_PRICES = {
             1200, 1200, 1900, 100000
     };
@@ -63,6 +70,8 @@ public class Game extends GameState {
     private int bookCookers;
     private int factoryLevel;
 
+    private int buildPoints;
+
     @Override
     public void init(Main main) {
         tabs = new TabComponent[4];
@@ -86,6 +95,8 @@ public class Game extends GameState {
         lastDailyProfits.add(1L);
         lastDailyMarketShares = new ArrayList<>();
         lastDailyMarketShares.add(-1.0);
+
+        buildPoints = 10;
 
         name = "Game";
         initialized = true;
@@ -250,5 +261,25 @@ public class Game extends GameState {
 
     public void setLastDailyProfits(ArrayList<Long> lastDailyProfits) {
         this.lastDailyProfits = lastDailyProfits;
+    }
+
+    public int getBuildPoints() {
+        return buildPoints;
+    }
+
+    public void setBuildPoints(int buildPoints) {
+        this.buildPoints = buildPoints;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public void setProducts(int i, Product product) {
+        products.set(i, product);
     }
 }

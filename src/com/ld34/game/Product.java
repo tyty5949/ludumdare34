@@ -11,14 +11,16 @@ public class Product {
     private int strength;
     private int agility;
     private int price;
+    private int[][] perks;
 
-    public Product(int type, String name, int speed, int strength, int agility, int price) {
+    public Product(int type, String name, int speed, int strength, int agility, int price, int[][] perks) {
         this.type = type;
         this.name = name;
         this.speed = speed;
         this.strength = strength;
         this.agility = agility;
         this.price = price;
+        this.perks = perks;
     }
 
     public int getType() {
@@ -67,5 +69,13 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int[][] getPerks() {
+        return perks;
+    }
+
+    public void setPerks(int[][] perks) {
+        this.perks = perks;
     }
 }

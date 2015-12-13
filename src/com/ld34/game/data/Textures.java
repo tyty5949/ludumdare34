@@ -26,6 +26,9 @@ public class Textures {
     public static SpriteSheetObject toggleBox;
     public static SpriteSheetObject toggleBoxActive;
     public static SpriteSheetObject textBox;
+    public static SpriteSheetObject fillBar;
+    public static SpriteSheetObject plusMinus;
+    public static SpriteSheetObject[] buttons;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
@@ -55,6 +58,12 @@ public class Textures {
         lineBreak = new SpriteSheetObject(0, 9, 215, 1);
         toggleBox = new SpriteSheetObject(0, 40, 40, 13);
         toggleBoxActive = new SpriteSheetObject(40, 40, 40, 13);
-        textBox = new SpriteSheetObject(0, 26, 127, 13);
+        textBox = new SpriteSheetObject(0, 28, 127, 12);
+        fillBar = new SpriteSheetObject(0, 25, 57, 3);
+        plusMinus = new SpriteSheetObject(0, 22, 8, 3);
+        buttons = new SpriteSheetObject[3];
+        buttons[0] = new SpriteSheetObject(0, 10, 28, 11);
+        buttons[1] = new SpriteSheetObject(28, 10, 28, 11);
+        buttons[2] = new SpriteSheetObject(56, 10, 28, 11);
     }
 }

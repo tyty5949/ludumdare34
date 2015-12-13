@@ -33,4 +33,15 @@ public class Utilities {
         else
             return "$" + new DecimalFormat("#,##0").format(new BigDecimal(tempMoney));
     }
+
+    public static int[] addToIntArray(int[] array, int newI) {
+        int[] array1 = new int[array.length + 1];
+        System.arraycopy(array, 0, array1, 0, array.length);
+        array1[array.length] = newI;
+        return array1;
+    }
+
+    public static double boundedRandom(double low, double high) {
+        return (Math.random() * (high - low)) + low;
+    }
 }
