@@ -25,7 +25,7 @@ public class Main implements Runnable {
     private static final int WIDTH = 640;
     private static final int HEIGHT = 640;
     private static final double TARGET_FPS = 30;
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private boolean running = false;
 

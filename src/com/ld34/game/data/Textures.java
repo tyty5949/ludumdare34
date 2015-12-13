@@ -19,6 +19,13 @@ public class Textures {
     public static SpriteSheetObject[] baseShopButtons;
     public static SpriteSheetObject[] shopButtons;
     public static SpriteSheetObject graph;
+    public static SpriteSheetObject chart;
+    public static SpriteSheetObject scrollLine;
+    public static SpriteSheetObject scrollDot;
+    public static SpriteSheetObject lineBreak;
+    public static SpriteSheetObject toggleBox;
+    public static SpriteSheetObject toggleBoxActive;
+    public static SpriteSheetObject textBox;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
@@ -42,5 +49,12 @@ public class Textures {
         shopButtons[4] = new SpriteSheetObject(15, 0, 44, 33);
         shopButtons[5] = new SpriteSheetObject(15, 0, 44, 33);
         graph = new SpriteSheetObject(224, 0, 69, 69);
+        chart = new SpriteSheetObject(224, 69, 203, 94);
+        scrollLine = new SpriteSheetObject(224, 164, 5, 87);
+        scrollDot = new SpriteSheetObject(229, 164, 7, 8);
+        lineBreak = new SpriteSheetObject(0, 9, 215, 1);
+        toggleBox = new SpriteSheetObject(0, 40, 40, 13);
+        toggleBoxActive = new SpriteSheetObject(40, 40, 40, 13);
+        textBox = new SpriteSheetObject(0, 26, 127, 13);
     }
 }

@@ -56,6 +56,8 @@ public class Game extends GameState {
     private String moneyString;
     private TabComponent[] tabs;
 
+    private ArrayList<Product> products;
+
     private int advertisingStaff;
     private int researchStaff;
     private int bookCookers;
@@ -77,6 +79,8 @@ public class Game extends GameState {
         day = 1;
         money = 0;
         moneyString = Utilities.formatMoney(money, Utilities.ADD_COMMAS);
+
+        products = new ArrayList<>();
 
         lastDailyProfits = new ArrayList<>();
         lastDailyProfits.add(1L);

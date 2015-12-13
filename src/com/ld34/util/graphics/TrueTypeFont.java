@@ -304,7 +304,8 @@ public class TrueTypeFont {
                 continue;
             }
             Glyph g = glyphs.get(c);
-            lineWidth += g.width;
+            if(g != null)
+                lineWidth += g.width;
         }
         width = Math.max(width, lineWidth);
         return width;
@@ -332,7 +333,8 @@ public class TrueTypeFont {
                 continue;
             }
             Glyph g = glyphs.get(c);
-            lineHeight = Math.max(lineHeight, (int) g.height);
+            if(g != null)
+                lineHeight = Math.max(lineHeight, (int) g.height);
         }
         height += lineHeight;
         return height;
@@ -368,8 +370,10 @@ public class TrueTypeFont {
                 continue;
             }
             Glyph g = glyphs.get(ch);
-            Render.drawGlyph(drawX, drawY, g, texture, c, true);
-            drawX += g.width;
+            if(g != null) {
+                Render.drawGlyph(drawX, drawY, g, texture, c, true);
+                drawX += g.width;
+            }
         }
     }
 
