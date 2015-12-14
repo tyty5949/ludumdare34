@@ -29,6 +29,7 @@ public class Textures {
     public static SpriteSheetObject fillBar;
     public static SpriteSheetObject plusMinus;
     public static SpriteSheetObject[] buttons;
+    public static SpriteSheetObject moneyTextBox;
 
     public static void init() {
         spriteSheet = new Texture(new File("res/spritesheet.png"));
@@ -40,10 +41,6 @@ public class Textures {
         tabHeaders[1] = new SpriteSheetObject(56, 54, 55, 18);
         tabHeaders[2] = new SpriteSheetObject(111, 54, 56, 18);
         tabHeaders[3] = new SpriteSheetObject(167, 54, 56, 18);
-        baseShopButtons = new SpriteSheetObject[3];
-        baseShopButtons[0] = new SpriteSheetObject(0, 256, 64, 64);
-        baseShopButtons[1] = new SpriteSheetObject(64, 256, 64, 64);
-        baseShopButtons[2] = new SpriteSheetObject(128, 256, 64, 64);
         shopButtons = new SpriteSheetObject[6];
         shopButtons[0] = new SpriteSheetObject(15, 0, 44, 33);
         shopButtons[1] = new SpriteSheetObject(15, 0, 44, 33);
@@ -65,5 +62,10 @@ public class Textures {
         buttons[0] = new SpriteSheetObject(0, 10, 28, 11);
         buttons[1] = new SpriteSheetObject(28, 10, 28, 11);
         buttons[2] = new SpriteSheetObject(56, 10, 28, 11);
+        moneyTextBox = new SpriteSheetObject(84, 10, 40, 11);
+        baseShopButtons = new SpriteSheetObject[3];
+        baseShopButtons[0] = new SpriteSheetObject(0, 256, 64, 64);
+        baseShopButtons[1] = new SpriteSheetObject(64, 256, 64, 64);
+        baseShopButtons[2] = new SpriteSheetObject(128, 256, 64, 64);
     }
 }

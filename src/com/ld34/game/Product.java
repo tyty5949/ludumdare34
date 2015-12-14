@@ -12,8 +12,12 @@ public class Product {
     private int agility;
     private int price;
     private int[][] perks;
+    private int advertisingCost;
+    private int productionCost;
 
-    public Product(int type, String name, int speed, int strength, int agility, int price, int[][] perks) {
+    private int profit;
+
+    public Product(int type, String name, int speed, int strength, int agility, int price, int[][] perks, int advertisingCost, int productionCost, Game game) {
         this.type = type;
         this.name = name;
         this.speed = speed;
@@ -21,6 +25,9 @@ public class Product {
         this.agility = agility;
         this.price = price;
         this.perks = perks;
+        this.advertisingCost = advertisingCost;
+        this.productionCost = productionCost;
+        profit = game.getEconomy().calculateProfit(this, game);
     }
 
     public int getType() {
@@ -77,5 +84,29 @@ public class Product {
 
     public void setPerks(int[][] perks) {
         this.perks = perks;
+    }
+
+    public int getAdvertisingCost() {
+        return advertisingCost;
+    }
+
+    public void setAdvertisingCost(int advertisingCost) {
+        this.advertisingCost = advertisingCost;
+    }
+
+    public int getProductionCost() {
+        return productionCost;
+    }
+
+    public void setProductionCost(int productionCost) {
+        this.productionCost = productionCost;
+    }
+
+    public int getProfit() {
+        return profit;
+    }
+
+    public void setProfit(int profit) {
+        this.profit = profit;
     }
 }

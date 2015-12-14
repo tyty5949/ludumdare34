@@ -27,7 +27,7 @@ public class Fonts {
             tabHeaderLarge = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_high_square.ttf")).deriveFont(Font.PLAIN, 46));
             shopButtonLabel = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_mini_square.ttf")).deriveFont(Font.PLAIN, 18));
             chartHeader = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_square.ttf")).deriveFont(Font.PLAIN, 18));
-            chartText = shopButtonLabel = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_mini_square.ttf")).deriveFont(Font.PLAIN, 20));
+            chartText = new TrueTypeFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/kenpixel_mini_square.ttf")).deriveFont(Font.PLAIN, 20));
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

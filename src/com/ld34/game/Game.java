@@ -45,16 +45,19 @@ public class Game extends GameState {
     private Button pauseButton;
     private boolean mouseCooldown;
 
+    private Economy economy;
+
     private int dayCounter;
     private double dayTimer;
     private int month;
     private int day;
 
-    private double marketShare = 0.0;
+    private double marketShare = 1.0;
 
     private ArrayList<Double> lastDailyMarketShares;
 
     private long money;
+
     private long profit = 1;
     private ArrayList<Long> lastDailyProfits;
     private long expenditure = 0;
@@ -74,11 +77,7 @@ public class Game extends GameState {
 
     @Override
     public void init(Main main) {
-        tabs = new TabComponent[4];
-        tabs[0] = new OverviewTab();
-        tabs[1] = new ProductsTab();
-        tabs[2] = new ResearchTab();
-        tabs[3] = new ShopTab();
+        economy = new Economy();
 
         paused = true;
         pauseButton = new Button(0, 0, 48, 64);
@@ -97,6 +96,11 @@ public class Game extends GameState {
         lastDailyMarketShares.add(-1.0);
 
         buildPoints = 10;
+        tabs = new TabComponent[4];
+        tabs[0] = new OverviewTab();
+        tabs[1] = new ProductsTab(this);
+        tabs[2] = new ResearchTab();
+        tabs[3] = new ShopTab();
 
         name = "Game";
         initialized = true;
@@ -158,9 +162,9 @@ public class Game extends GameState {
         Fonts.topBar.drawText("MS: " + marketShare + "%", 320f - ((float) Fonts.topBar.getWidth("MS: " + marketShare + "%") / 2.0f), 4f, Colors.FONT_LIGHT);
         Fonts.topBar.drawText(MONTHS[month] + ", " + day, 48, 4, Colors.FONT_LIGHT);
         if (paused)
-            Render.drawSpriteSheetObject(Textures.pauseButton, 8, 17, 32, 32, Textures.spriteSheet);
-        else
             Render.drawSpriteSheetObject(Textures.playButton, 8, 17, 32, 32, Textures.spriteSheet);
+        else
+            Render.drawSpriteSheetObject(Textures.pauseButton, 8, 17, 32, 32, Textures.spriteSheet);
 
         // Tabs
         for (int i = 0; i < 4; i++) {
@@ -181,8 +185,7 @@ public class Game extends GameState {
     }
 
     private void simulateDay() {
-        profit = income - expenditure;
-        money += profit;
+        economy.simulate(this);
 
         // Update graphs
         lastDailyMarketShares.add(marketShare);
@@ -279,7 +282,35 @@ public class Game extends GameState {
         products.add(product);
     }
 
-    public void setProducts(int i, Product product) {
+    public void setProduct(int i, Product product) {
         products.set(i, product);
+    }
+
+    public Economy getEconomy() {
+        return economy;
+    }
+
+    public int getDayCounter() {
+        return dayCounter;
+    }
+
+    public void setDayCounter(int dayCounter) {
+        this.dayCounter = dayCounter;
+    }
+
+    public double getMarketShare() {
+        return marketShare;
+    }
+
+    public void setMarketShare(double marketShare) {
+        this.marketShare = marketShare;
+    }
+
+    public long getProfit() {
+        return profit;
+    }
+
+    public void setProfit(long profit) {
+        this.profit = profit;
     }
 }

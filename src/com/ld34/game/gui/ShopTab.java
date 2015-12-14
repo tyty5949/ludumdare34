@@ -101,7 +101,7 @@ public class ShopTab extends TabComponent {
                 Render.drawSpriteSheetObject(Textures.baseShopButtons[activeButtonState + 1], 20 + (206 * (i % 3)), 152 + (226 * (i / 3)), 186, 186, Textures.spriteSheet);
             else
                 Render.drawSpriteSheetObject(Textures.baseShopButtons[0], 20 + (206 * (i % 3)), 152 + (226 * (i / 3)), 186, 186, Textures.spriteSheet);
-            Render.drawSpriteSheetObject(Textures.shopButtons[i], 20 + (206 * (i % 3)), 152 + (226 * (i / 3)), 186, 186, Textures.spriteSheet);
+            //Render.drawSpriteSheetObject(Textures.shopButtons[i], 20 + (206 * (i % 3)), 152 + (226 * (i / 3)), 186, 186, Textures.spriteSheet);
         }
 
         Fonts.shopButtonLabel.drawText("advertising staff", 29, 152, Colors.FONT_LIGHT);

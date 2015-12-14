@@ -9,6 +9,7 @@ import com.ld34.render.Render;
 import com.ld34.util.Button;
 import com.ld34.util.Mouse;
 import com.ld34.util.Textbox;
+import com.ld34.util.Utilities;
 
 /**
  * Created on 12/11/2015.
@@ -32,9 +33,19 @@ public class ProductsTab extends TabComponent {
     private int[][] perks;
     private Button submitButton;
     private int buttonState;
-    private int price;
 
-    public ProductsTab() {
+    private int price;
+    private Textbox priceTextbox;
+
+    private Product selectedProduct;
+    private Product tempProduct;
+    private int advertisingCost;
+    private Textbox advertisingTextbox;
+    private int productionCost;
+
+    private int lastDay = 0;
+
+    public ProductsTab(Game game) {
         headerButton = new Button(161f, 69.2f, 159, 51.36f);
         name = "Products";
         scrollBallOffset = 0;
@@ -54,10 +65,19 @@ public class ProductsTab extends TabComponent {
             subtractPoints[i] = new Button(155, 537 + (i * 28), 16.2f, 10);
         perks = new int[4][0];
         perks[0] = new int[]{0};
+        advertisingCost = 1000;
+        price = 100;
+        priceTextbox = new Textbox(422, 529, 114, 31.4f, 25, "" + price, true);
+        generateTempProduct(game);
     }
 
     @Override
     public void update(Game game) {
+        if (game.getDayCounter() != lastDay) {
+            lastDay = game.getDayCounter();
+            generateTempProduct(game);
+        }
+
         nameTextbox.update();
         for (int i = 0; i < 4; i++) {
             if (Mouse.isButtonDown(0) && types[i].contains(Mouse.getX(), Mouse.getY())) {
@@ -72,6 +92,7 @@ public class ProductsTab extends TabComponent {
                         nameTextbox.setText("Helicopter");
                     else if (selectedType == 3)
                         nameTextbox.setText("Airplane");
+                    generateTempProduct(game);
                 }
             }
         }
@@ -84,15 +105,15 @@ public class ProductsTab extends TabComponent {
                         if (i == 0 && speedPoints < 10) {
                             speedPoints++;
                             pointsUsed++;
-                            calculatePerks();
+                            calculatePerks(game);
                         } else if (i == 1 && agilityPoints < 10) {
                             agilityPoints++;
                             pointsUsed++;
-                            calculatePerks();
+                            calculatePerks(game);
                         } else if (i == 2 && strengthPoints < 10) {
                             strengthPoints++;
                             pointsUsed++;
-                            calculatePerks();
+                            calculatePerks(game);
                         }
                     }
                 }
@@ -103,15 +124,15 @@ public class ProductsTab extends TabComponent {
                     if (i == 0 && speedPoints > 0) {
                         speedPoints--;
                         pointsUsed--;
-                        calculatePerks();
+                        calculatePerks(game);
                     } else if (i == 1 && agilityPoints > 0) {
                         agilityPoints--;
                         pointsUsed--;
-                        calculatePerks();
+                        calculatePerks(game);
                     } else if (i == 2 && strengthPoints > 0) {
                         strengthPoints--;
                         pointsUsed--;
-                        calculatePerks();
+                        calculatePerks(game);
                     }
                 }
             }
@@ -119,8 +140,9 @@ public class ProductsTab extends TabComponent {
             if (submitButton.contains(Mouse.getX(), Mouse.getY())) {
                 // TODO - Update product if editing
                 // TODO - Add in things that stop from buying
-                game.addProduct(new Product(selectedType, nameTextbox.getText(), speedPoints, strengthPoints, agilityPoints, price, perks));
-                resetForm();
+                generateTempProduct(game);
+                game.addProduct(tempProduct);
+                resetForm(game);
             }
         }
 
@@ -131,6 +153,15 @@ public class ProductsTab extends TabComponent {
                 buttonState = 1;
         } else
             buttonState = 0;
+
+        priceTextbox.update();
+        if (priceTextbox.getText().equals("")) {
+            price = 0;
+            generateTempProduct(game);
+        } else if (Integer.parseInt(priceTextbox.getText()) != price) {
+            price = Integer.parseInt(priceTextbox.getText());
+            generateTempProduct(game);
+        }
 
         mouseCooldown = Mouse.isButtonDown(0);
     }
@@ -146,7 +177,7 @@ public class ProductsTab extends TabComponent {
         Fonts.chartHeader.drawText("$ per day", 480f, 132f, Colors.FONT_LIGHT);
         for (int i = 0; i < game.getProducts().size(); i++) {
             Fonts.chartText.drawText(game.getProducts().get(i).getName(), 54, 170 + (i * 22), Colors.FONT_LIGHT);
-            Fonts.chartText.drawText("price $$", 484, 170 + (i * 22), Colors.FONT_LIGHT);
+            Fonts.chartText.drawText("" + Utilities.formatMoney(game.getProducts().get(i).getProfit(), Utilities.ADD_COMMAS), 484, 170 + (i * 22), Colors.FONT_LIGHT);
         }
 
         // Scroll bar
@@ -189,17 +220,27 @@ public class ProductsTab extends TabComponent {
         Render.drawSpriteSheetObject(Textures.fillBar, 20, 610, 162.6f, 5.6f, Textures.spriteSheet);
         Render.drawSpriteSheetObject(Textures.plusMinus, 159.8f, 594, 22.8f, 8.6f, Textures.spriteSheet);
 
-        Fonts.chartHeader.drawText("Perks", 280, 489, Colors.FONT_LIGHT);
+        Fonts.chartHeader.drawText("Perks", 272, 489, Colors.FONT_LIGHT);
         int count = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < perks[i].length; j++) {
-                Fonts.shopButtonLabel.drawText(Game.PERKS[i][perks[i][j]], 220, 510 + (count * 14), Colors.FONT_LIGHT);
+                Fonts.shopButtonLabel.drawText(Game.PERKS[i][perks[i][j]], 212, 510 + (count * 14), Colors.FONT_LIGHT);
                 count++;
             }
         }
+
+        Fonts.chartHeader.drawText("Est Profit:", 400, 489, Colors.FONT_LIGHT);
+        if (tempProduct.getProfit() <= 0)
+            Fonts.chartHeader.drawText("$" + tempProduct.getProfit(), 535, 489, Colors.FONT_ERROR);
+        else
+            Fonts.chartHeader.drawText("$" + tempProduct.getProfit(), 535, 489, Colors.FONT_GOOD);
+
+        Fonts.chartText.drawText("Price", 450, 508, Colors.FONT_LIGHT);
+        Render.drawSpriteSheetObject(Textures.moneyTextBox, 420, 530, 114, 31.4f, Textures.spriteSheet);
+        priceTextbox.render();
     }
 
-    private void resetForm() {
+    private void resetForm(Game game) {
         perks = new int[4][0];
         perks[0] = new int[]{0};
         pointsUsed = 0;
@@ -208,9 +249,10 @@ public class ProductsTab extends TabComponent {
         strengthPoints = 0;
         selectedType = 0;
         nameTextbox.setText("Quadcopter");
+        generateTempProduct(game);
     }
 
-    private void calculatePerks() {
+    private void calculatePerks(Game game) {
         if (speedPoints == 10)
             perks[0] = new int[]{9};
         else if (speedPoints >= 8)
@@ -237,5 +279,19 @@ public class ProductsTab extends TabComponent {
             perks[2] = new int[]{4};
         else
             perks[2] = new int[]{};
+
+        generateTempProduct(game);
+    }
+
+    private void generateTempProduct(Game game) {
+        if (selectedType == 0)
+            productionCost = (99 * speedPoints) + (99 * agilityPoints) + (99 * strengthPoints);
+        else if (selectedType == 1)
+            productionCost = (16 * speedPoints) + (16 * agilityPoints) + (16 * strengthPoints);
+        else if (selectedType == 2)
+            productionCost = (49 * speedPoints) + (49 * agilityPoints) + (49 * strengthPoints);
+        else if (selectedType == 3)
+            productionCost = (83 * speedPoints) + (83 * agilityPoints) + (83 * strengthPoints);
+        tempProduct = new Product(selectedType, nameTextbox.getText(), speedPoints, strengthPoints, agilityPoints, price, perks, advertisingCost, productionCost, game);
     }
 }
